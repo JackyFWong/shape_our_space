@@ -175,3 +175,22 @@ form.items input[type="submit"]:hover {
 
     font-size: 10px;
 }
+
+.preview {
+    position: absolute;
+    right: 0px;
+    bottom: 56px;
+    margin: 20px;
+    padding: 20px;
+
+    height: 150px;
+    width: auto;
+
+    background-color: var(--c6);
+    transition: 0.5s;
+}
+
+.preview video {
+    height: 100%;
+    width: auto;
+}
