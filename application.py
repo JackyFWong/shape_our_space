@@ -69,7 +69,7 @@ def handle_connection(data):
 
 @socketio.on("get_current")
 def handle_connection_current(data):
-    if session["room"] in game_rooms.rooms:
+    if session.get("room", "DEFAULT") in game_rooms.rooms:
         emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
 
 @socketio.on("move_user")
