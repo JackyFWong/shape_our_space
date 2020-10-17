@@ -75,7 +75,7 @@ def handle_connection_current(data):
 
 @socketio.on("move_user")
 def move_user(data):
-    ensuer_player(session)
+    ensure_player(session)
     print("moving user")
     if not (session["room"] in game_rooms.rooms):
         print("ERROR: invalid room")
