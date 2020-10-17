@@ -19,7 +19,7 @@ function get_self_stream() {
 				let newvideo = document.createElement("video");
 				newvideo.autoplay = true;
 				newvideo.srcObject = stream;
-				newvideo.prop("muted", true);
+				newvideo.muted = true;
 				$("#personal-video").append(newvideo);
 				resolve(stream);
 			},
