@@ -1,18 +1,56 @@
-<html>
-  <head>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="//unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-	<script>
-	  var room_code = "{{ context.get("room_code")|safe }}";
-	  var username = "{{ context.get("username")|safe }}";
-	</script>
-	<script src="{{ url_for('static', filename='js/abstract_video.js')}}"></script>
-	<script src="{{ url_for('static', filename='js/peerjsfun.js')}}" defer></script>
-  </head>
-  <body>
-	<div id="calls">
-	  
-	</div>
-  </body>
-</html>
+{% extends "template.html" %}
+
+{% block headscript %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+    integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
+    crossorigin="anonymous">
+</script>
+<script src="https://code.createjs.com/1.0.0/createjs.min.js" defer></script>
+<script>
+    var room_code = "{{ context.get('room_code')|safe }}";
+    var username = "{{ context.get('username')|safe }}";
+</script>
+<script src="{{ url_for('static', filename='js/abstract_video.js')}}"></script>
+<script src="{{ url_for('static', filename='js/peerjsfun.js')}}" defer></script>
+<script src="{{ url_for('static', filename='js/virtual.js') }}" defer></script>
+{% endblock %}
+
+
+{% block content %}
+<div id="screen-wrap">
+    <canvas id="demoCanvas">
+    </canvas>
+    <button class="openbtn" onclick="openBar()">&#9776; Open Sidebar</button>
+    <h1 class="text-warning">Hello World</h1> 
+</div>
+
+<div id="video-feed" class="sidebar">
+    <h3>Video feed</h3>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a>
+    <div id="calls">
+    </div>
+</div>
+
+
+<nav id="bottom-nav" class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom main-bar">
+    <span class="navbar-text" id="username">
+        Username
+    </span>
+    <span class="navbar-text" id="roomcode">
+        Roomcode
+    </span>
+    <ul class="navbar-nav">
+        <li class="nav-item" id="exit">
+            <a class="nav-link" href="index.html">Exit</a>
+        </li>
+    </ul>
+</nav>
+{% endblock%}
+
+
+{% block footscript %}
+    <script src="{{ url_for('static', filename='js/video_bar.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/main_bar.js')}}"></script>
+{% endblock %}

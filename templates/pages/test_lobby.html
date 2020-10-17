@@ -1,33 +1,52 @@
 {% extends "template.html" %}
 
-{% block content %}
+{% block headscript %}
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="//unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+		integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
+		crossorigin="anonymous">
+	</script>
+	<script>
+		var room_code = "{{ context.get("room_code")|safe }}";
+		var username = "{{ context.get("username")|safe }}";
+	</script>
+	<script src="{{ url_for('static', filename='js/abstract_video.js')}}"></script>
+	<script src="{{ url_for('static', filename='js/peerjsfun.js')}}" defer></script>
+{% endblock %}
 
+{% block content %}
 <div id="screen-wrap">
     <canvas>
 
     </canvas>
-    <div class="side-menu">
-        <input type="checkbox" id="video-toggle">
-        <label for="video-toggle">
-            <span class="toggle-words">
-                Toggle Video
-            </span>
-        </label>
-        <div id="video-feed">
-            <ul>
-                <li>
-                    test
-                </li>
-                <li>
-                    another test
-                </li>
-            </ul>
+    <button class="openbtn" onclick="openBar()">&#9776; Open Sidebar</button>
+    <h1 class="text-warning">Hello World</h1> 
+</div>
+
+<div id="video-feed" class="sidebar">
+    <h3>Video feed</h3>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeBar()">&times;</a>
+    <div id="calls">   <!-- Previously id="video-grid" -->
+        <div class="video-item">
+        </div>
+        <div class="video-item">
+        </div>
+        <div class="video-item">
+        </div>
+        <div class="video-item">
+        </div>
+        <div class="video-item">
+        </div>
+        <div class="video-item">
+        </div>
+        <div class="video-item">
         </div>
     </div>
 </div>
 
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom main-bar">
+<nav id="bottom-nav" class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom main-bar">
     <span class="navbar-text" id="username">
         Username
     </span>
@@ -40,5 +59,10 @@
         </li>
     </ul>
 </nav>
+{% endblock %}
 
-{% endblock%}
+
+{% block footscript %}
+    <script src="{{ url_for('static', filename='js/video_bar.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/main_bar.js')}}"></script>
+{% endblock %}

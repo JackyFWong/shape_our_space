@@ -9,10 +9,15 @@
         crossorigin="anonymous">
     <link rel="stylesheet" 
         href="{{ url_for('static', filename='styles/main.css') }}">
-    {% block script %}{% endblock %}
+    {% block headscript %}{% endblock %}
 </head>
 
 <body>
     {% block content %}{% endblock %}
 </body>
+
+<footer>
+    {% block footscript %}{% endblock %}
+</footer>
+
 </html>
