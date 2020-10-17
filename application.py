@@ -72,17 +72,25 @@ def handle_connection(data):
     if session["room"] in game_rooms.rooms:
         emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
 
+@socketio.on("move_user")
+def move_user(data):
+    if not (session["room"] in game_rooms.rooms):
+        print("ERROR: invalid room")
+        return
+    if not (session["username"] in game_room.rooms[session["room"]]):
+        print("ERROR: invalid user")
+        return
+    game_rooms.move_user(session["room"], session["user"], data.get("x", 0), data.get("y", 0))
+    emit("update", game_rooms.get_room_info(session["room"]), room=session["room"])
+
 @socketio.on("disconnect")
 def handle_disconnection():
     #all_rooms = rooms()
     game_rooms.remove_user(session["room"], session["username"])
     emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
     print('emitted update')
-    """
-    for room in all_rooms:
-        leave_room(room)
-    emit("update", {"room":game_rooms.rooms[room]}, room=room)
-    """
+    session["room"] = None
+    session["username"] = ""
     
     
 if __name__ == '__main__':

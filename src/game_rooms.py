@@ -11,8 +11,8 @@ def add_user(room, user):
         return False
     rooms[room]["users"][user] = {
         "username": user,
-        "x": 0,
-        "y": 0,
+        "x": -500,
+        "y": -500,
         "peer_id": -1
     }
     rooms[room]["peers"].append(user)
@@ -37,3 +37,13 @@ def remove_user(room, user):
         rooms[room]["peers"].remove(user)
         return True
     return False
+
+def move_user(room, user, x, y):
+    rooms[room]["users"][user]["x"] = x
+    rooms[room]["users"][user]["y"] = y
+    return True
+
+def get_room_info(room):
+    return {
+        "room": rooms[room]
+    }
