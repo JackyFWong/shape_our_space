@@ -16,6 +16,11 @@ function get_self_stream() {
 			{video: true, audio: true},
 			function(stream) {
 				self_stream = stream;
+				let newvideo = document.createElement("video");
+				newvideo.autoplay = true;
+				newvideo.srcObject = stream;
+				newvideo.muted = true;
+				$("#personal-video").append(newvideo);
 				resolve(stream);
 			},
 			function(err) {
@@ -35,7 +40,6 @@ function new_self_peer(peerid) {
 	return new Promise(function(resolve, reject) {
 		console.log("MAKING SELF PEER")
 		self_peer = new Peer(peerid, {
-
 			host: "hackgt-peerjs.herokuapp.com",
 			port: 443,
 			secure: true
