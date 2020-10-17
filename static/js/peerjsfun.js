@@ -20,13 +20,19 @@ function update_from_server(arg) {
 		arg = updateCallbacks.shift();
 		console.log("Getting update from server", arg);
 		console.log(self_peer_id);
-		// Make sure every new person has a video
+		// Make sure every new person has a video, and update them
 		for (let i = 0; i < arg.room.peers.length; i++) {
-			console.log(arg.room.peers[i], self_peer_id);
-			let new_peer_id = arg.room.users[arg.room.peers[i]].peer_id;
+      let name = arg.room.peers[i];
+
+      newOthers = {}
+			console.log(name, self_peer_id);
+			let new_peer_id = arg.room.users[name].peer_id;
 			if (!is_my_peer_id(new_peer_id)) {
 				ensure_video(new_peer_id, "calls");
+        newOthers[name] = arg.room.users[name];
 			}
+
+      others = newOthers;
 		}
 		// Remove unneeded videos
 		let difference = server_data.room.peers.filter(x => !arg.room.peers.includes(x));

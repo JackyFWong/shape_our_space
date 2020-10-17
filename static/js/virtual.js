@@ -1,12 +1,13 @@
-var movement_speed = 5;
-const MIN_DISTANCE = 5;
+var movement_speed = 7;
+const MIN_DISTANCE = 7;
 var stage;
 var map;
 var self_obj;
+var others = {};
 
 function drawRoom(stage, x, y, radius) {
   var room = new createjs.Shape();
-  room.graphics.beginStroke("Black").beginFill("White").drawCircle(0, 0, radius)
+  room.graphics.beginStroke("Black").beginFill("White").drawCircle(0, 0, radius);
   room.x = x;
   room.y = y;
   
@@ -28,8 +29,22 @@ function move_to(obj, x, y) {
 }
 
 function tick() {
-	//console.log(self.targetx, " ", self.targety);
 	move_to(self, self.targetx, self.targety);
+ 
+  for( const [key, val] of Object.entries(others)) {
+    other = stage.getChildByName(key);
+      
+    if(other) {
+      move_to(other, val.x, val.y);
+    }
+    else {
+      other = new createjs.Shape().set({x: val.x, y: val.y, name: key});
+      other.graphics.beginFill("Black").drawCircle(0, 0, 20);
+      stage.addChild(other);
+      console.log("Adding new token for " + key);
+    }
+  }
+ 
 	stage.update();
 }
 
@@ -40,19 +55,17 @@ function init_canvas() {
 	createjs.Ticker.setFPS(30);
     
   map = new createjs.Shape();
-  map.graphics.beginStroke("Black").beginFill("#DDDDDD").rect(0, 0, 1400, 900)
+  map.graphics.beginStroke("Black").beginFill("#DDDDDD").rect(0, 0, 1400, 900);
   stage.addChild(map);
   
-  self = new createjs.Shape();
+  self = new createjs.Shape().set({x: 100, y: 100, name: username});
   self.graphics.beginFill("DeepSkyBlue").drawPolyStar(0, 0, 30, 3, 0, 270).beginFill("rgba(0, 0, 0, 0.1)").drawCircle(0, 0, 150).beginFill("Black").drawCircle(0, 0, 2);
-  self.x = 100;
-  self.y = 100;
   stage.addChild(self);
   
   drawRoom(stage, 1000, 225, 200);
   drawRoom(stage, 1000, 650, 200);  
   
-  stage.setChildIndex(self, stage.getNumChildren()-1);
+  stage.setChildIndex(self, stage.getNumChildren() - 1);
   
   stage.update();
 
