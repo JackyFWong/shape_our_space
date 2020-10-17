@@ -1,5 +1,25 @@
 {% extends "template.html" %}
 
 {% block content %}
-<p>Hello world</p>
+
+<div class="container-sm login-wrap">
+    <h1 class="text-center">Not a Gather.Town ripoff</h1>
+    <form class="items">
+        <div class="input-box">
+            <input id="username" type="text" placeholder="Username">
+        </div>
+        <div class="input-box">
+            <input id="roomcode" type="text" placeholder="Room Code">
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom 
+        justify-content-center">
+    <span class="navbar-text">
+        Bottom Text
+    </span>
+</nav>
+
 {% endblock%}
