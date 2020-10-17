@@ -74,13 +74,14 @@ def handle_connection(data):
 
 @socketio.on("move_user")
 def move_user(data):
+    print("moving user")
     if not (session["room"] in game_rooms.rooms):
         print("ERROR: invalid room")
         return
-    if not (session["username"] in game_room.rooms[session["room"]]):
+    if not (session["username"] in game_rooms.rooms[session["room"]]["users"]):
         print("ERROR: invalid user")
         return
-    game_rooms.move_user(session["room"], session["user"], data.get("x", 0), data.get("y", 0))
+    game_rooms.move_user(session["room"], session["username"], data.get("x", 0), data.get("y", 0))
     emit("update", game_rooms.get_room_info(session["room"]), room=session["room"])
 
 @socketio.on("disconnect")
@@ -88,7 +89,6 @@ def handle_disconnection():
     #all_rooms = rooms()
     game_rooms.remove_user(session["room"], session["username"])
     emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
-    print('emitted update')
     session["room"] = None
     session["username"] = ""
     

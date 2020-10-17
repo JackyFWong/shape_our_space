@@ -39,6 +39,16 @@ function update_from_server(arg) {
 	updateLock = false;
 }
 
+function send_position(x, y) {
+	socket.emit(
+		"move_user",
+		{
+			"x": x,
+			"y": y
+		}
+	)
+}
+
 
 // When document has loaded
 $(document).ready( function() {
