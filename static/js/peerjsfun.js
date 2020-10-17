@@ -1,89 +1,60 @@
 var socket;
-var peer_info = {};
-var peers = [];
-var peer_ids = [];
-var self_peer;
-var self_peer_id;
-var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-var self_stream;
-var video_allowed = false;
-var streams = [];
+var server_data = {
+	"room": {
+		"users": {},
+		"peers": []
+	}
+};
 
-function add_video(peerid) {
-	console.log("Making call ", peerid);
-	console.log(self_peer);
-	let call = self_peer.call(
-		peerid, self_stream
-	);
-	call.on('stream', function(remoteStream) {
-		if (streams.includes(remoteStream)) return;
-		streams.push(remoteStream);
-		console.log("Receiving peer stream");
-		// Show stream in some video/canvas element.
-		let newvideo = document.createElement("video");
-		newvideo.autoplay = true;
-		console.log(remoteStream);
-		newvideo.srcObject = remoteStream;
-		$("#calls").append(newvideo);
-		console.log("Made peer element");
-	});
-}
 
-function answer_call(call) {
-	if (!video_allowed) {
-		setTimeout(function() {answer_call(call)}, 200);
+var updateLock = false;
+var updateCallbacks = [];
+function update_from_server(arg) {
+	updateCallbacks.push(arg);
+	if (updateLock) {
 		return;
 	}
-	call.answer(self_stream);
-	console.log("answered call");
+	updateLock = true;
+	while (updateCallbacks.length) {
+		arg = updateCallbacks.shift();
+		console.log("Getting update from server", arg);
+		console.log(self_peer_id);
+		// Make sure every new person has a video
+		for (let i = 0; i < arg.room.peers.length; i++) {
+			console.log(arg.room.peers[i], self_peer_id);
+			let new_peer_id = arg.room.users[arg.room.peers[i]].peer_id;
+			if (!is_my_peer_id(new_peer_id)) {
+				ensure_video(new_peer_id, "calls");
+			}
+		}
+		// Remove unneeded videos
+		let difference = server_data.room.peers.filter(x => !arg.room.peers.includes(x));
+		for (let i = 0; i < difference.length; i++){
+			console.log(i, difference[i]);
+			remove_video(server_data.room.users[difference[i]].peer_id);
+		}
+		server_data = arg;
+		console.log("Ending update");
+	}
+	updateLock = false;
 }
 
 
 // When document has loaded
 $(document).ready( function() {
 	socket = io();
-	getUserMedia(
-		{video: true, audio: true},
-		function(stream) {
-			self_stream = stream;
-			video_allowed = true;
-		},
-		function(err) {
-			console.log("ERR no stream");
-		}
-	);
-	
-	socket.on('connect', function() {
-		self_peer = new Peer();
-		self_peer.on('open', function(id) {
-			self_peer_id = id;
-			console.log('My peer ID is: ' + id);
-			socket.emit("connected_web", {"id": id});
-		});
-		self_peer.on('call', function(call) {
-			console.log("Receiving call");
-			answer_call(call);
-		}, function(err) {
-			console.log('Failed to get local stream' ,err);
+	socket.on("connect", () => {
+		console.log("Socket connected");
+		get_self_stream().then((stream) => {
+			new_self_peer().then((peer) => {
+				console.log("Created peer for self");
+				console.log("peer ", peer);
+				console.log("Updating server info.");
+				socket.on('update', update_from_server);
+				socket.emit("connected_web", {"id": self_peer_id});
+				socket.emit('get_current', {"?":"?"});
+				return peer;
+			});
 		});
 	});
-
-	function update_from_server(arg) {
-		if (!video_allowed) {
-			console.log("Not ready for server update");
-			setTimeout(function() {update_from_server(arg)}, 200);
-			return;
-		}
-		console.log("Getting update from server", arg);
-		console.log(self_peer_id);
-		for (let i = 0; i < arg.peers.length; i++) {
-			if (!peer_ids.includes(arg.peers[i]) && arg.peers[i] != self_peer_id) {
-				peer_ids.push(arg.peers[i]);
-				console.log("Adding peer");
-				add_video(arg.peers[i]);
-			}
-		}
-	}
-	
-	socket.on('update', update_from_server);
 });

@@ -10,12 +10,13 @@ from flask_socketio import SocketIO, join_room, leave_room
 from flask_socketio import emit, rooms
 from json import dumps
 
+from src import game_rooms
+
 
 app = Flask(__name__, template_folder="./templates", static_folder="./static")
 app.secret_key = b"hackgt_secret_key"
 socketio = SocketIO(app, logger=True)
 
-users = []
 
 @app.route("/")
 def index():
@@ -24,17 +25,10 @@ def index():
         context={}
     )
 
-@app.route("/2")
-def index2():
+@app.route("/gather")
+def gather():
     return render_template(
-        "pages/index2.html",
-        context={}
-    )
-
-@app.route("/3")
-def index3():
-    return render_template(
-        "pages/index3.html",
+        "pages/gather.html",
         context={}
     )
 
@@ -45,11 +39,34 @@ def test_request():
 @socketio.on("connected_web")
 def handle_connection(data):
     print(data)
-    join_room("online")
     session["peer_id"] = data["id"]
-    users.append(data["id"])
-    emit("update", {"peers":users}, room="online")
+    session["room"] = data.get("room", "DEFAULT")
+    session["username"] = data.get(
+        "username",
+        str(game_rooms.num_users(session["room"])+1)
+    )
+    game_rooms.add_user(session["room"], session["username"])
+    game_rooms.update_peer_id(session["room"], session["username"], session["peer_id"])
+    emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
+    join_room(session["room"])
 
+@socketio.on("get_current")
+def handle_connection(data):
+    if session["room"] in game_rooms.rooms:
+        emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
+
+@socketio.on("disconnect")
+def handle_disconnection():
+    #all_rooms = rooms()
+    game_rooms.remove_user(session["room"], session["username"])
+    emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
+    print('emitted update')
+    """
+    for room in all_rooms:
+        leave_room(room)
+    emit("update", {"room":game_rooms.rooms[room]}, room=room)
+    """
+    
     
 if __name__ == '__main__':
     socketio.run(app, debug=True)
