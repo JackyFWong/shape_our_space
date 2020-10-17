@@ -35,10 +35,10 @@ function new_self_peer(peerid) {
 	return new Promise(function(resolve, reject) {
 		console.log("MAKING SELF PEER")
 		self_peer = new Peer(peerid, {
-      "host": "localhost",
-      "port": 9000,
-      "path": "/"
-    });
+			host: "hackgt-peerjs.herokuapp.com",
+			port: 443,
+			secure: true
+		});
     
 		self_peer.on('open', function(id) {
 			self_peer_id = id;
