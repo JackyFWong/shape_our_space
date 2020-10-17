@@ -31,22 +31,31 @@ function move_to(obj, x, y) {
 function tick() {
 	move_to(self, self.targetx, self.targety);
  
-  for( const [key, val] of Object.entries(others)) {
-    other = stage.getChildByName(key);
-      
-    if(other) {
-      move_to(other, val.x, val.y);
+  circles = stage.children.filter(e => e.name != null & e.name != username)
+  for(let i = 0; i < circles.length; i++) {
+    let name = circles[i].name;
+    
+    if (others[name]) {
+      move_to(circles[i], others[name].x, others[name].y);
     }
     else {
+      stage.removeChild(circles[i]);
+    }
+  }
+ 
+  for( const [key, val] of Object.entries(others)) {
+    other = stage.getChildByName(key);
+
+    if (!other) {
       other = new createjs.Shape().set({x: val.x, y: val.y, name: key});
       other.graphics.beginFill("Black").drawCircle(0, 0, 15);
       stage.addChild(other);
       console.log("Adding new token for " + key);
     }
-  }
+  }  
  
   // put yourself on top
-  stage.setChildIndex(self, stage.getNumChildren() - 1);
+  stage.setChildIndex(self, stage.children.length - 1);
   
 	stage.update();
 }
