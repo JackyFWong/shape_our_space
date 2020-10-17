@@ -58,6 +58,7 @@ $(document).ready( function() {
 	socket.on("connect", () => {
 		console.log("Socket connected");
 		get_self_stream().then((stream) => {
+			console.log("Setup self stream");
 			new_self_peer().then((peer) => {
 				console.log("Created peer for self");
 				console.log("peer ", peer);
@@ -72,6 +73,7 @@ $(document).ready( function() {
 					}
 				);
 				socket.emit('get_current', {"?":"?"});
+				sockets_working = true;
 				return peer;
 			});
 		});

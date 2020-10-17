@@ -1,4 +1,5 @@
 var movement_speed = 5;
+const MIN_DISTANCE = 5;
 var stage;
 var map;
 var self_obj;
@@ -14,6 +15,10 @@ function drawRoom(stage, x, y, radius) {
 
 function move_to(obj, x, y) {
 	let vlength = Math.sqrt(Math.pow(obj.x-x,2)+Math.pow(obj.y-y,2));
+	if (vlength < MIN_DISTANCE) {
+		obj.x = x;
+		obj.y = y;
+	}
 	let vlengthx = x-obj.x;
 	let vlengthy = y-obj.y;
 	if (Math.abs(obj.x - x) > 1 || Math.abs(obj.y - y) > 1) {

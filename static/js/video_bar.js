@@ -15,3 +15,7 @@ function closeBar() {
         document.getElementById("screen-wrap").style.marginRight = "0";
     }
 }
+
+$(document).ready( () => {
+	openBar();
+});

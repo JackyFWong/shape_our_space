@@ -36,10 +36,12 @@ function new_self_peer() {
 		console.log("MAKING SELF PEER")
 		self_peer = new Peer();
 		self_peer.on('open', function(id) {
-			sockets_working = true;
 			self_peer_id = id;
 			console.log('My peer ID is: ' + id);
 			resolve(self_peer);
+		}, function(err) {
+			console.log("PeerJS error: ", err);
+			reject(err);
 		});
 		self_peer.on('call', function(call) {
 			console.log("Receiving call");
