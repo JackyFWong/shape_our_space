@@ -90,7 +90,7 @@ def move_user(data):
 def handle_disconnection():
     ensure_player(session)
     if game_rooms.remove_user(session["room"], session["username"]):
-        emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
+      emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
     session["room"] = ""
     session["username"] = ""
 
