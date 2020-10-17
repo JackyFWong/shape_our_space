@@ -1,0 +1,21 @@
+<html>
+  <head>
+	<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+	<script>
+	  var peers = []
+	  peers.push(new Peer());
+	  var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+	  peer.on('call', function(call) {
+		  getUserMedia({video: true, audio: true}, function(stream) {
+			  call.answer(stream); // Answer the call with an A/V stream.
+			  call.on('stream', function(remoteStream) {
+				  // Show stream in some video/canvas element.
+				  console.log("nice");
+			  });
+		  }, function(err) {
+			  console.log('Failed to get local stream' ,err);
+		  });
+	  });
+	</script>
+  </head>
+</html>
