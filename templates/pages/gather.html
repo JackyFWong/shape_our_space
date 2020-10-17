@@ -2,12 +2,12 @@
 
 {% block headscript %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
     integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
     crossorigin="anonymous">
 </script>
-<!--><script src="https://code.createjs.com/1.0.0/createjs.min.js" defer></script>-->
+<script src="https://code.createjs.com/1.0.0/createjs.min.js" defer></script>
 <script src="{{ url_for('static', filename='js/peerjs.min.js') }}"></script>
 <script>
     var room_code = "{{ context.get('room_code')|safe }}";
@@ -21,7 +21,7 @@
 
 {% block content %}
 <div id="screen-wrap">
-    <canvas id="demoCanvas">
+    <canvas id="demoCanvas" width="1400", height="900">
     </canvas>
     <button class="openbtn" onclick="openBar()">&#9776; Open Sidebar</button>
     <h1 class="text-warning">Hello World</h1> 

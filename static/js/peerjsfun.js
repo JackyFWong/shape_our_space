@@ -51,14 +51,13 @@ function send_position(x, y) {
 	)
 }
 
-
 // When document has loaded
 $(document).ready( function() {
 	socket = io();
 	socket.on("connect", () => {
 		console.log("Socket connected");
 		get_self_stream().then((stream) => {
-			new_self_peer().then((peer) => {
+			new_self_peer(username + "1" + room_code).then((peer) => {
 				console.log("Created peer for self");
 				console.log("peer ", peer);
 				console.log("Updating server info.");

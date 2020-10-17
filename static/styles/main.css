@@ -4,11 +4,6 @@ html, body {
     margin: 0;
 }
 
-canvas {
-    height: 100%;
-    width: 100%;
-}
-
 .login-wrap {
     height: 100%;
     max-width: 300px;

@@ -31,10 +31,15 @@ function answer_call(call) {
 	console.log("Answered call ", call);
 }
 
-function new_self_peer() {
+function new_self_peer(peerid) {
 	return new Promise(function(resolve, reject) {
 		console.log("MAKING SELF PEER")
-		self_peer = new Peer();
+		self_peer = new Peer(peerid, {
+      "host": "localhost",
+      "port": 9000,
+      "path": "/"
+    });
+    
 		self_peer.on('open', function(id) {
 			sockets_working = true;
 			self_peer_id = id;
