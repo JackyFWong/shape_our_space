@@ -1,0 +1,44 @@
+{% extends "template.html" %}
+
+{% block content %}
+
+<div id="screen-wrap">
+    <canvas>
+
+    </canvas>
+    <div class="side-menu">
+        <input type="checkbox" id="video-toggle">
+        <label for="video-toggle">
+            <span class="toggle-words">
+                Toggle Video
+            </span>
+        </label>
+        <div id="video-feed">
+            <ul>
+                <li>
+                    test
+                </li>
+                <li>
+                    another test
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom main-bar">
+    <span class="navbar-text" id="username">
+        Username
+    </span>
+    <span class="navbar-text" id="roomcode">
+        Roomcode
+    </span>
+    <ul class="navbar-nav">
+        <li class="nav-item" id="exit">
+            <a class="nav-link" href="#">Exit</a>
+        </li>
+    </ul>
+</nav>
+
+{% endblock%}

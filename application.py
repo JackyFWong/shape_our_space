@@ -38,6 +38,13 @@ def index3():
         context={}
     )
 
+@app.route("/t")
+def test_lobby():
+    return render_template(
+        "pages/test_lobby.html",
+        context={}
+    )
+
 @app.route("/test", methods=["POST"])
 def test_request():
     return redirect(url_for("index"))
