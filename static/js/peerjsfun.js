@@ -1,5 +1,5 @@
 var socket;
-var socket_working = false;
+var sockets_working = false;
 var server_data = {
 	"room": {
 		"users": {},
@@ -41,7 +41,7 @@ function update_from_server(arg) {
 }
 
 function send_position(x, y) {
-	if (!socket_working) return;
+	if (!sockets_working) return;
 	socket.emit(
 		"move_user",
 		{
@@ -56,7 +56,6 @@ function send_position(x, y) {
 $(document).ready( function() {
 	socket = io();
 	socket.on("connect", () => {
-		socket_working = true;
 		console.log("Socket connected");
 		get_self_stream().then((stream) => {
 			new_self_peer().then((peer) => {
