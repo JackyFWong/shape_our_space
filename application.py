@@ -75,7 +75,7 @@ def handle_connection_current(data):
 
 @socketio.on("move_user")
 def move_user(data):
-    ensuer_player(session)
+    ensure_player(session)
     print("moving user")
     if not (session["room"] in game_rooms.rooms):
         print("ERROR: invalid room")
@@ -90,7 +90,7 @@ def move_user(data):
 def handle_disconnection():
     ensure_player(session)
     if game_rooms.remove_user(session["room"], session["username"]):
-        emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
+      emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
     session["room"] = ""
     session["username"] = ""
 

@@ -11,8 +11,8 @@ def add_user(room, user):
         return False
     rooms[room]["users"][user] = {
         "username": user,
-        "x": -500,
-        "y": -500,
+        "x": 100,
+        "y": 100,
         "peer_id": -1
     }
     rooms[room]["peers"].append(user)

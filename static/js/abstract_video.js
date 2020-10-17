@@ -5,9 +5,9 @@ var peer_to_stream = {};
 var streams = [];
 var video_for = [];
 
-function is_my_peer_id(peer_id) {
+/*function is_my_peer_id(peer_id) {
 	return (self_peer_id == peer_id)
-}
+}*/
 
 function get_self_stream() {
 	return new Promise(function(resolve, reject) {
@@ -35,11 +35,11 @@ function new_self_peer(peerid) {
 	return new Promise(function(resolve, reject) {
 		console.log("MAKING SELF PEER")
 		self_peer = new Peer(peerid, {
-      "host": "localhost",
-      "port": 9000,
-      "path": "/"
-    });
-    
+
+			host: "hackgt-peerjs.herokuapp.com",
+			port: 443,
+			secure: true
+		});
 		self_peer.on('open', function(id) {
 			self_peer_id = id;
 			console.log('My peer ID is: ' + id);
