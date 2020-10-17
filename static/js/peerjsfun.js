@@ -71,6 +71,7 @@ $(document).ready( function() {
 					}
 				);
 				socket.emit('get_current', {"?":"?"});
+				sockets_working = true;
 				return peer;
 			});
 		});

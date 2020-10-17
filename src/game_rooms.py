@@ -32,6 +32,8 @@ def update_peer_id(room, user, peer_id):
     return True
 
 def remove_user(room, user):
+    if not (room in rooms):
+        return False
     if user in rooms[room]["users"]:
         del rooms[room]["users"][user]
         rooms[room]["peers"].remove(user)

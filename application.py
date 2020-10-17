@@ -55,7 +55,7 @@ def test_request():
 
 @socketio.on("connected_web")
 def handle_connection(data):
-    print(data)
+    ensure_player(session)
     session["peer_id"] = data["id"]
     session["room"] = data.get("room", "DEFAULT")
     session["username"] = data.get(
@@ -69,11 +69,13 @@ def handle_connection(data):
 
 @socketio.on("get_current")
 def handle_connection_current(data):
+    ensure_player(session)
     if session.get("room", "DEFAULT") in game_rooms.rooms:
         emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
 
 @socketio.on("move_user")
 def move_user(data):
+    ensuer_player(session)
     print("moving user")
     if not (session["room"] in game_rooms.rooms):
         print("ERROR: invalid room")
@@ -86,12 +88,15 @@ def move_user(data):
 
 @socketio.on("disconnect")
 def handle_disconnection():
-    #all_rooms = rooms()
-    game_rooms.remove_user(session["room"], session["username"])
-    emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
-    #session["room"] = None
+    ensure_player(session)
+    if game_rooms.remove_user(session["room"], session["username"]):
+        emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
     session["room"] = ""
     session["username"] = ""
+
+def ensure_player(session):
+    session["room"] = session.get("room", "DEFAULT")
+    session["username"] = session.get('username', "")
     
     
 if __name__ == '__main__':
