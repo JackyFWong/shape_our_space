@@ -68,7 +68,7 @@ def handle_connection(data):
     join_room(session["room"])
 
 @socketio.on("get_current")
-def handle_connection(data):
+def handle_connection_current(data):
     if session["room"] in game_rooms.rooms:
         emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
 
@@ -89,7 +89,8 @@ def handle_disconnection():
     #all_rooms = rooms()
     game_rooms.remove_user(session["room"], session["username"])
     emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])
-    session["room"] = None
+    #session["room"] = None
+    session["room"] = ""
     session["username"] = ""
     
     
