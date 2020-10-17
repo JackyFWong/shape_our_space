@@ -51,7 +51,14 @@ $(document).ready( function() {
 				console.log("peer ", peer);
 				console.log("Updating server info.");
 				socket.on('update', update_from_server);
-				socket.emit("connected_web", {"id": self_peer_id});
+				socket.emit(
+					"connected_web",
+					{
+						"id": self_peer_id,
+						"room": room_code,
+						"username": username
+					}
+				);
 				socket.emit('get_current', {"?":"?"});
 				return peer;
 			});

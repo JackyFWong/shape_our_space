@@ -25,11 +25,21 @@ def index():
         context={}
     )
 
-@app.route("/gather")
+@app.route("/gather", methods=["POST", "GET"])
 def gather():
+    # TODO check if can enter room
+    print(request.form)
     return render_template(
         "pages/gather.html",
-        context={}
+        context={
+            "username": request.form.get(
+                "username",
+                str(game_rooms.num_users(
+                    request.form.get('room_code', "DEFAULT")
+                )+1)
+            ),
+            "room_code": request.form.get("room_code", "DEFAULT")
+        }
     )
 
 @app.route("/test", methods=["POST"])
