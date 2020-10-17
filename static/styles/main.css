@@ -1,12 +1,35 @@
+:root {
+    --c0: #151531;
+    --c1: #121016;
+    --c2: #299BC2;
+    --c3: #FFFFFF;
+    --c4: #323273;
+    --c5: #FFFFFF;
+    --c6: #99CC99;
+    --c7: #BD506C;
+    --c8: #1D1826;
+    --c9: #FFFFFF;
+
+    --cbkg: #1A1D21;
+}
+
 html, body {
     height: 100vh;
     width: 100vw;
     margin: 0;
 }
 
+body {
+    background-color: var(--cbkg);
+}
+
+h1 {
+    color: var(--c5);
+}
+
 .login-wrap {
     height: 100%;
-    max-width: 300px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,12 +42,38 @@ form.items {
     justify-content: center;
     align-items: center;
 
-    width: 100%;
+    width: 50%;
+    margin: 0;
+    padding: 0;
 }
 
-.input-box {
-    margin: 5px 10px;
+form.items input[type="text"] {
+    margin: 20px 0;
+    padding: 20px;
+    height: 40px;
+
+    color: var(--c3);
+    background-color: var(--cbkg);
+    border-width: 0;
+    border-bottom: 1px solid var(--c3);
+}
+
+form.items input[type="text"]:focus {
+    background-color: var(--c2);
+}
+form.items input[type="text"]:hover {
+    background-color: var(--c2);
+}
+
+form.items input[type="submit"] {
+    color: var(--c3);
+    background-color: var(--c0);
+    border-width: 0;
     padding: 10px;
+}
+
+form.items input[type="submit"]:hover {
+    background-color: var(--c4);
 }
 
 .main-bar {
@@ -36,6 +85,13 @@ form.items {
     padding-right: 20px;
 
     z-index: 1;
+
+    background-color: var(--c8);
+    color: var(--c9);
+}
+
+.nav-link {
+    color: #AD2218;
 }
 
 /* SIDE VIDEO BAR / FEED */
@@ -55,20 +111,29 @@ form.items {
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: gray;
     overflow: hidden;
     transition: 0.5s;
+    background-color: var(--c0)
 }
 
-.sidebar a, li {
-    display: block;
-    transition: 0.3s;
+.sidebar h3 {
+    color: var(--c3);
+    text-align: center;
 }
+
 
 .sidebar .closebtn {
     position: absolute;
-    top: 0;
+    top: 10px;
+    left: 10px;
     color: white;
+    text-decoration: none;
+}
+
+.openbtn {
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 /* VIDEO ITEMS */
@@ -85,9 +150,28 @@ form.items {
 
 .video-item {
     height: 150px;
-    width: 200px;
+    width: auto;;
     margin: 10px;
     padding: 0;
     
-    background-color: yellow;
+    background-color: var(--c6);
+    position: relative;
+}
+
+.video-item video {
+    height: 100%;
+    width: auto;
+}
+
+.name-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 5px;
+
+    background-color: var(--c7);
+    color: var(--c5);
+
+    font-size: 10px;
 }

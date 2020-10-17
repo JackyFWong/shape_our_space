@@ -25,7 +25,7 @@ function update_from_server(arg) {
 			console.log(arg.room.peers[i], self_peer_id);
 			let new_peer_id = arg.room.users[arg.room.peers[i]].peer_id;
 			if (!is_my_peer_id(new_peer_id)) {
-				ensure_video(new_peer_id, "calls");
+				ensure_video(new_peer_id, "calls", arg.room.peers[i]);
 			}
 		}
 		// Remove unneeded videos

@@ -7,18 +7,13 @@
 <div class="container-sm login-wrap">
     <h1 class="text-center">Not a Gather.Town ripoff</h1>
     <form class="items" action="{{ url_for('gather') }}" method="post">
-        <div class="input-box">
             <input id="username" type="text" placeholder="Username" name="username">
-        </div>
-        <div class="input-box">
             <input id="roomcode" type="text" placeholder="Room Code" name="room_code">
-        </div>
         <input type="submit" value="Submit">
     </form>
 </div>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom 
-        justify-content-center">
+<nav class="navbar navbar-expand-md fixed-bottom justify-content-center main-bar">
     <span class="navbar-text">
         Bottom Text
     </span>

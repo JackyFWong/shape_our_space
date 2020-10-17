@@ -57,7 +57,7 @@ function new_self_peer(peerid) {
 	});
 }
 
-function add_video(peer_id, div_id) {
+function add_video(peer_id, div_id, video_user) {
 	let call = self_peer.call(
 		peer_id, self_stream
 	);
@@ -72,9 +72,18 @@ function add_video(peer_id, div_id) {
 		newvideo.autoplay = true;
 		console.log(remoteStream);
 		newvideo.srcObject = remoteStream;
-		//newvideo.attr("id", "video-"+peer_id)
-		newvideo.id = "video-"+peer_id;
-		$("#"+div_id).append(newvideo);
+
+		let videoName = document.createElement("p");
+		videoName.className = "name-bar";
+		videoName.innerHTML = video_user;
+
+		let videoWrapper = document.createElement("div");
+		videoWrapper.id = "video-"+peer_id;
+		videoWrapper.className = "video-item";
+		videoWrapper.appendChild(newvideo);
+		videoWrapper.appendChild(videoName);
+		$("#"+div_id).append(videoWrapper)
+
 		console.log("Made peer element");
 	});
 }
@@ -94,10 +103,10 @@ function remove_video(peer_id) {
 	delete peer_to_stream[peer_id];
 }
 
-function ensure_video(peer_id, div_id) {
+function ensure_video(peer_id, div_id, video_user) {
 	if (video_for.includes(peer_id)) return;
 	if (peer_to_stream.hasOwnProperty(peer_id)) return;
 	if ($("#video-"+peer_id).length != 0) return;
 	console.log("adding video for ", peer_id);
-	add_video(peer_id, div_id);
+	add_video(peer_id, div_id, video_user);
 }
