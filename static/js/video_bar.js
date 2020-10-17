@@ -5,6 +5,7 @@ function openBar() {
     document.getElementById("video-feed").style.padding = "20px";
     if (shift_canvas) {
         document.getElementById("screen-wrap").style.marginRight = "500px";
+        document.getElementById("personal-video").style.marginRight = "520px";
     }
 }
 
@@ -13,6 +14,7 @@ function closeBar() {
     document.getElementById("video-feed").style.padding = "0";
     if (shift_canvas) {
         document.getElementById("screen-wrap").style.marginRight = "0";
+        document.getElementById("personal-video").style.marginRight = "20px";
     }
 }
 
