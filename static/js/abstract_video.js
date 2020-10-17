@@ -5,9 +5,9 @@ var peer_to_stream = {};
 var streams = [];
 var video_for = [];
 
-function is_my_peer_id(peer_id) {
+/*function is_my_peer_id(peer_id) {
 	return (self_peer_id == peer_id)
-}
+}*/
 
 function get_self_stream() {
 	return new Promise(function(resolve, reject) {

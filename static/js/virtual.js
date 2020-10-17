@@ -39,12 +39,15 @@ function tick() {
     }
     else {
       other = new createjs.Shape().set({x: val.x, y: val.y, name: key});
-      other.graphics.beginFill("Black").drawCircle(0, 0, 20);
+      other.graphics.beginFill("Black").drawCircle(0, 0, 15);
       stage.addChild(other);
       console.log("Adding new token for " + key);
     }
   }
  
+  // put yourself on top
+  stage.setChildIndex(self, stage.getNumChildren() - 1);
+  
 	stage.update();
 }
 
@@ -64,8 +67,6 @@ function init_canvas() {
   
   drawRoom(stage, 1000, 225, 200);
   drawRoom(stage, 1000, 650, 200);  
-  
-  stage.setChildIndex(self, stage.getNumChildren() - 1);
   
   stage.update();
 
