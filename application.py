@@ -39,7 +39,7 @@ def gather():
                 str(game_rooms.num_users(
                     request.form.get('room_code', "DEFAULT")
                 )+1)
-            ),
+            ).replace(" ", "-"),
             "room_code": request.form.get("room_code", "DEFAULT"),
             "bcolor": request.form.get("bColor", "#ffffff"),
             "tcolor": request.form.get("tColor", "#ffffff"),
