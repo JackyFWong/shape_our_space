@@ -12,9 +12,16 @@ def add_user(room, user):
         "username": user,
         "x": 100,
         "y": 100,
-        "peer_id": -1
+        "peer_id": -1,
+        "tcolor": "#ffffff",
+        "bcolor": "#ffffff",
     }
     rooms[room]["peers"].append(user)
+    return True
+
+def set_color(room, user, bcolor, tcolor):
+    rooms[room]["users"][user]["bcolor"] = bcolor
+    rooms[room]["users"][user]["tcolor"] = tcolor
     return True
 
 def add_room(room):
@@ -22,7 +29,8 @@ def add_room(room):
         return False
     rooms[room] = {
         "users": {},
-        "peers": []
+        "peers": [],
+        "circles": []
     }
     return True
 
@@ -48,3 +56,10 @@ def get_room_info(room):
     return {
       "room": rooms[room]
     }
+
+def add_circle(room, x, y, radius):
+    rooms[room]["circles"].append({
+        "x": x,
+        "y": y,
+        "radius": radius
+    })

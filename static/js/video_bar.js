@@ -17,5 +17,5 @@ function closeBar() {
 }
 
 $(document).ready( () => {
-	openBar();
+	//openBar();
 });

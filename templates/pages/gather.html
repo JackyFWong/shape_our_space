@@ -10,8 +10,10 @@
 <script src="https://code.createjs.com/1.0.0/createjs.min.js" defer></script>
 <script src="{{ url_for('static', filename='js/peerjs.min.js') }}"></script>
 <script>
-    var room_code = "{{ context.get('room_code')|safe }}";
-    var username = "{{ context.get('username')|safe }}";
+  var room_code = "{{ context.get('room_code')|safe }}";
+  var username = "{{ context.get('username')|safe }}";
+  var bcolor_init = "{{ context.get('bcolor')|safe }}";
+  var tcolor_init = "{{ context.get('tcolor')|safe }}";
 </script>
 <script src="{{ url_for('static', filename='js/abstract_video.js')}}"></script>
 <script src="{{ url_for('static', filename='js/peerjsfun.js')}}" defer></script>

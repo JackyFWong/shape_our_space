@@ -4,6 +4,7 @@ var stage;
 var map;
 var self_obj;
 var others = {};
+const RADIUS = 250;
 
 function drawRoom(stage, x, y, radius) {
   var room = new createjs.Shape();
@@ -32,13 +33,13 @@ function move_to(obj, x, y) {
   }
   
   if (Math.hypot(self.targetx - x, self.targety - y) <= RADIUS) {
-    if(obj.graphics._fill["style"] != "Red") {
-      obj.graphics.clear().beginFill("Red").drawCircle(0, 0, 15);
+    if(obj.shadow.color != "Green") {
+      obj.shadow = new createjs.Shadow("Green", 0, 0, 20);
     }
   }
   else {
-    if(obj.graphics._fill["style"] != "Black") {
-      obj.graphics.clear().beginFill("Black").drawCircle(0, 0, 15);
+    if(obj.shadow.color != "rgba(50,50,50,0)") {
+      obj.shadow = new createjs.Shadow("rgba(50,50,50,0)", 0, 0, 10);
     }
   }
 }
@@ -63,7 +64,8 @@ function tick() {
 
     if (!other) {
       other = new createjs.Shape().set({x: val.x, y: val.y, name: key});
-      other.graphics.beginFill("Black").drawCircle(0, 0, 15);
+      other.graphics.beginFill(val.tcolor).drawCircle(0, 0, 15).beginFill(val.bcolor).drawCircle(0, 0, 10);
+      other.shadow = new createjs.Shadow("rgba(50,50,50,0)", 0, 0, 10);
       
       stage.addChild(other);
       console.log("Adding new token for " + key);
@@ -87,7 +89,7 @@ function init_canvas() {
   stage.addChild(map);
   
   self = new createjs.Shape().set({x: 100, y: 100, name: username});
-  self.graphics.beginFill("DeepSkyBlue").drawPolyStar(0, 0, 30, 3, 0, 270).beginFill("rgba(0, 0, 0, 0.1)").drawCircle(0, 0, RADIUS - 15).beginFill("Black").drawCircle(0, 0, 2);
+  self.graphics.beginFill(tcolor_init).drawPolyStar(0, 0, 30, 3, 0, 270).beginFill(bcolor_init).drawPolyStar(0, 0, 20, 3, 0, 270).beginFill("rgba(0, 0, 0, 0.1)").drawCircle(0, 0, RADIUS - 15).beginFill("Black").drawCircle(0, 0, 2);
   stage.addChild(self);
   
   drawRoom(stage, 1000, 225, 200);

@@ -7,16 +7,16 @@
 <div class="container-sm login-wrap">
     <h1 class="text-center">Shape Our Space</h1>
     <form class="items" action="{{ url_for('gather') }}" method="post">
-            <input id="username" type="text" placeholder="Username" name="username">
-            <input id="roomcode" type="text" placeholder="Room Code" name="room_code" value="{{ context.get('filled_room_code')|safe }}">
-            <div>
-                <label for="tColor">Top Color</label>
-                <input id="tColor" type="color" name="tColor">
-            </div>
-            <div>
-                <label for="bColor">Bottom Color</label>
-                <input id="bColor" type="color" name="bColor">
-            </div>
+        <input id="username" type="text" placeholder="Username" name="username">
+        <input id="roomcode" type="text" placeholder="Room Code" name="room_code" value="{{ context.get('filled_room_code')|safe }}">
+        <div>
+            <label for="tColor">Top Color</label>
+            <input id="tColor" type="color" name="tColor">
+        </div>
+        <div>
+            <label for="bColor">Bottom Color</label>
+            <input id="bColor" type="color" name="bColor">
+        </div>
         <input type="submit" value="Submit">
     </form>
 </div>

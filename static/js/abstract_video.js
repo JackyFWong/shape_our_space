@@ -1,7 +1,10 @@
 var self_stream;
 var self_peer;
 var self_peer_id = -1;
-var peer_to_stream = {};
+//var outgoing_peer_to_stream = {};
+var incoming_peer_to_call = {};
+var incoming_peer_to_stream = {};
+var outgoing_peer_to_calls = {};
 var streams = [];
 var video_for = [];
 
@@ -34,6 +37,12 @@ function get_self_stream() {
 function answer_call(call) {
 	call.answer(self_stream);
 	console.log("Answered call ", call);
+	outgoing_peer_to_calls[call.peer] = call;
+	call.on('close', ()=> {
+		console.log("detected close");
+		call.close();
+		delete call;
+	})
 }
 
 function new_self_peer(peerid) {
@@ -53,6 +62,7 @@ function new_self_peer(peerid) {
 			reject(err);
 		});
 		self_peer.on('call', function(call) {
+			// you giving your stream
 			console.log("Receiving call");
 			answer_call(call);
 		}, function(err) {
@@ -62,6 +72,7 @@ function new_self_peer(peerid) {
 }
 
 function add_video(peer_id, div_id, video_user) {
+	// you requesting their stream
 	let call = self_peer.call(
 		peer_id, self_stream
 	);
@@ -69,12 +80,12 @@ function add_video(peer_id, div_id, video_user) {
 	call.on('stream', function(remoteStream) {
 		if (streams.includes(remoteStream)) return;
 		streams.push(remoteStream);
-		peer_to_stream[peer_id] = remoteStream;
+		incoming_peer_to_call[peer_id] = call;
+		incoming_peer_to_stream[peer_id] = remoteStream;
 		console.log("Receiving new peer stream");
 		
 		let newvideo = document.createElement("video");
 		newvideo.autoplay = true;
-		console.log(remoteStream);
 		newvideo.srcObject = remoteStream;
 
 		let videoName = document.createElement("p");
@@ -94,25 +105,34 @@ function add_video(peer_id, div_id, video_user) {
 }
 
 function remove_video(peer_id) {
-  if (!video_for.includes(peer_id)) return;
+	if (!video_for.includes(peer_id)) return;
+	if ($("#video-"+peer_id).length == 0) return;
+	if (!incoming_peer_to_call.hasOwnProperty(peer_id)) return;
+	console.log("Removing peer video");
   
 	$("#video-"+peer_id).remove();
-	//streams.remove(peer_to_stream[peer_id]);
-	let index = streams.indexOf(peer_to_stream[peer_id]);
+
+	let index = streams.indexOf(incoming_peer_to_call[peer_id]);
+	let s = streams[index];
 	if (index > -1) {
 		streams.splice(index, 1);
 	}
+	delete s;
 	index = video_for.indexOf(peer_id);
 	if (index > -1) {
 		video_for.splice(index, 1);
 	}
-	//video_for.remove(peer_id)
-	delete peer_to_stream[peer_id];
+	
+	incoming_peer_to_call[peer_id].close();
+	//incoming_peer_to_call[peer_id].destroy();
+	//RTCPeerConnection.removeStream(incoming_peer_to_stream[peer_id]);
+	//delete incoming_peer_to_stream[peer_id];  // delete the raw stream
+	console.log("closed incoming call ", peer_id);
 }
 
 function ensure_video(peer_id, div_id, video_user) {
 	if (video_for.includes(peer_id)) return;
-	if (peer_to_stream.hasOwnProperty(peer_id)) return;
+	//if (incoming_peer_to_call.hasOwnProperty(peer_id)) return;
 	if ($("#video-"+peer_id).length != 0) return;
 
 	console.log("adding video for ", peer_id);
