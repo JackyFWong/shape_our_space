@@ -27,6 +27,10 @@ function move_to(obj, x, y) {
 		obj.y += movement_speed * vlengthy / vlength;  // * (y - obj.y);
 	}
   
+  if(obj == self) {
+    return;
+  }
+  
   if (Math.hypot(self.targetx - x, self.targety - y) <= RADIUS) {
     if(obj.graphics._fill["style"] != "Red") {
       obj.graphics.clear().beginFill("Red").drawCircle(0, 0, 15);
