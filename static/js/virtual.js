@@ -33,13 +33,13 @@ function move_to(obj, x, y) {
   }
   
   if (Math.hypot(self.targetx - x, self.targety - y) <= RADIUS) {
-    if(obj.graphics._fill["style"] != "Red") {
-      obj.graphics.clear().beginFill("Red").drawCircle(0, 0, 15);
+    if(obj.shadow.color != "Green") {
+      obj.shadow = new createjs.Shadow("Green", 0, 0, 20);
     }
   }
   else {
-    if(obj.graphics._fill["style"] != "Black") {
-      obj.graphics.clear().beginFill("Black").drawCircle(0, 0, 15);
+    if(obj.shadow.color != "rgba(50,50,50,0)") {
+      obj.shadow = new createjs.Shadow("rgba(50,50,50,0)", 0, 0, 10);
     }
   }
 }
@@ -64,7 +64,8 @@ function tick() {
 
     if (!other) {
       other = new createjs.Shape().set({x: val.x, y: val.y, name: key});
-      other.graphics.beginFill("Black").drawCircle(0, 0, 15);
+      other.graphics.beginFill(val.tcolor).drawCircle(0, 0, 15).beginFill(val.bcolor).drawCircle(0, 0, 10);
+      other.shadow = new createjs.Shadow("rgba(50,50,50,0)", 0, 0, 10);
       
       stage.addChild(other);
       console.log("Adding new token for " + key);
