@@ -29,7 +29,6 @@ h1 {
 
 .login-wrap {
     height: 100%;
-    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,11 +64,23 @@ form.items input[type="text"]:hover {
     background-color: var(--c2);
 }
 
+form.items label {
+    color: var(--c3);
+    margin: 0 10px;
+    padding: 0;
+}
+form.items input[type="color"] {
+    margin: 0 10px;
+    padding: 5px;
+    border: none;
+}
+
 form.items input[type="submit"] {
     color: var(--c3);
     background-color: var(--c0);
     border-width: 0;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 20px;
 }
 
 form.items input[type="submit"]:hover {
@@ -98,14 +109,22 @@ form.items input[type="submit"]:hover {
 
 #screen-wrap {
     background-color: black;
-    height: calc(100% - 56px);
+    max-height: calc(100vh - 56px);
     transition: margin-right .5s;
     margin-bottom: 56px;
+}
+
+#screen-wrap canvas {
+    max-height: calc(100vh - 56px);
+    height: auto;
+    max-width: 100vw;
+    width: auto;
 }
 
 .sidebar {
     height: calc(100% - 56px);
     width: 0;
+    max-width: 50%;
     margin-bottom: 56px;
     position: fixed;
     z-index: 1;
@@ -113,7 +132,7 @@ form.items input[type="submit"]:hover {
     right: 0;
     overflow: hidden;
     transition: 0.5s;
-    background-color: var(--c0)
+    background-color: rgba(21,21,49,0.95);
 }
 
 .sidebar h3 {
@@ -152,7 +171,7 @@ form.items input[type="submit"]:hover {
     height: 150px;
     width: auto;;
     margin: 10px;
-    padding: 0;
+    padding: 5px;
     
     background-color: var(--c6);
     position: relative;
@@ -181,7 +200,7 @@ form.items input[type="submit"]:hover {
     right: 0px;
     bottom: 56px;
     margin: 20px;
-    padding: 20px;
+    padding: 5px;
 
     height: 150px;
     width: auto;
