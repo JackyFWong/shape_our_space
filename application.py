@@ -41,8 +41,8 @@ def gather():
                 )+1)
             ),
             "room_code": request.form.get("room_code", "DEFAULT"),
-            "bcolor": request.form.get("bcolor", "#ffffff"),
-            "tcolor": request.form.get("tcolor", "#ffffff"),
+            "bcolor": request.form.get("bColor", "#ffffff"),
+            "tcolor": request.form.get("tColor", "#ffffff"),
         }
     )
 
@@ -59,6 +59,7 @@ def test_request():
 
 @socketio.on("connected_web")
 def handle_connection(data):
+    print(data)
     ensure_player(session)
     session["peer_id"] = data["id"]
     session["room"] = data.get("room", "DEFAULT").lower()  # lower room code
