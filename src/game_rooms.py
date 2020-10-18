@@ -15,7 +15,6 @@ def add_user(room, user):
         "peer_id": -1,
         "tcolor": "#ffffff",
         "bcolor": "#ffffff",
-        "circles": []
     }
     rooms[room]["peers"].append(user)
     return True
@@ -30,7 +29,8 @@ def add_room(room):
         return False
     rooms[room] = {
         "users": {},
-        "peers": []
+        "peers": [],
+        "circles": []
     }
     return True
 
