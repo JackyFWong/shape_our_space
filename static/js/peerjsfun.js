@@ -6,6 +6,7 @@ var server_data = {
 		"peers": []
 	}
 };
+var RADIUS = 250;
 
 function copy_url() {
 	//let code = "https://shape-our-space.herokuapp.com/"+
@@ -46,23 +47,34 @@ function update_from_server(arg) {
 
 		// Make sure every new person has a video, and update them
     newOthers = {}
+
+    let myx = arg.room.users[username].x;
+    let myy = arg.room.users[username].y;
+    
 		for (let i = 0; i < arg.room.peers.length; i++) {
     	let name = arg.room.peers[i];
-      
     	console.log("ive reached ", name);
 
-		let new_peer_id = arg.room.users[name].peer_id;
+      let new_peer_id = arg.room.users[name].peer_id;
 
-		if (new_peer_id != self_peer_id) {
-			ensure_video(new_peer_id, "calls", name);
-			newOthers[name] = arg.room.users[name];
-		}
-	}
+      if (new_peer_id != self_peer_id) {
+        console.log("CHECKING!!!");
+        if (Math.hypot(myx - arg.room.users[name].x, myy - arg.room.users[name].y) <= RADIUS) {
+          ensure_video(new_peer_id, "calls", name);
+        }
+        else {
+          remove_video(new_peer_id);
+          console.log("bye felicia");
+        }
+        
+        newOthers[name] = arg.room.users[name];
+      }
+    }
     others = newOthers;
     
 		// Remove unneeded videos
 		let difference = server_data.room.peers.filter(x => !arg.room.peers.includes(x));
-		for (let i = 0; i < difference.length; i++){
+		for (let i = 0; i < difference.length; i++) {
 			console.log(i, difference[i]);
 			remove_video(server_data.room.users[difference[i]].peer_id);
 		}
