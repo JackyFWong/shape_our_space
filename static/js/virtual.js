@@ -9,7 +9,7 @@ const RADIUS = 250;
 
 function drawRoom(x, y, radius) {
   var room = new createjs.Shape();
-  room.graphics.beginStroke("Black").beginFill("rgba(255, 255, 255, 0.25)").drawCircle(0, 0, radius);
+  room.graphics.beginStroke("Black").beginFill("rgba(255, 255, 255, 0.4)").drawCircle(0, 0, radius);
   room.x = x;
   room.y = y;
   room.isRoom = true;
