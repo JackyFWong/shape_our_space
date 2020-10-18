@@ -7,6 +7,30 @@ var server_data = {
 	}
 };
 
+function copy_url() {
+	//let code = "https://shape-our-space.herokuapp.com/"+
+	let params = {
+		room_code: room_code,
+	};
+
+	var esc = encodeURIComponent;
+	var query = Object.keys(params)
+		.map(k => esc(k) + '=' + esc(params[k]))
+		.join('&');
+	console.log(window.location.hostname, query);
+	console.log(window.location.hostname+"/?"+query);
+
+	/*
+	$("#hidden_text").show();
+	$("#hidden_text").val(window.location.hostname + "/?" + query);
+	let copyText = document.querySelector("#hidden_text");
+	copyText.select();
+	document.execCommand("copy");
+	$("#hidden_text").hide();
+	*/
+	alert("Link: " + window.location.hostname + "/?" + query);
+}
+
 
 var updateLock = false;
 var updateCallbacks = [];

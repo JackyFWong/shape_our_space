@@ -8,7 +8,7 @@
     <h1 class="text-center">Not a Gather.Town ripoff</h1>
     <form class="items" action="{{ url_for('gather') }}" method="post">
             <input id="username" type="text" placeholder="Username" name="username">
-            <input id="roomcode" type="text" placeholder="Room Code" name="room_code">
+            <input id="roomcode" type="text" placeholder="Room Code" name="room_code" value="{{ context.get('filled_room_code')|safe }}">
         <input type="submit" value="Submit">
     </form>
 </div>

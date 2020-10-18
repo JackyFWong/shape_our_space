@@ -22,7 +22,9 @@ socketio = SocketIO(app, logger=True)
 def index():
     return render_template(
         "pages/index.html",
-        context={}
+        context={
+            "filled_room_code": request.args.get("room_code", "")
+        }
     )
 
 @app.route("/gather", methods=["POST", "GET"])
@@ -57,7 +59,7 @@ def test_request():
 def handle_connection(data):
     ensure_player(session)
     session["peer_id"] = data["id"]
-    session["room"] = data.get("room", "DEFAULT")
+    session["room"] = data.get("room", "DEFAULT").lower()  # lower room code
     session["username"] = data.get(
         "username",
         str(game_rooms.num_users(session["room"])+1)
