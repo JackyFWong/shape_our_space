@@ -71,14 +71,16 @@ function update_from_server(arg) {
 	while (updateCallbacks.length) {
 		arg = updateCallbacks.shift();
 		console.log("Getting update from server", arg);
-
+		
 		// Make sure every new person has a video, and update them
-    newOthers = {}
-    
-    for (let i = 0; i < arg.room.peers.length; i++) {
-    	let name = arg.room.peers[i];
+		newOthers = {}
+		let num_peers = 0;
+		
+		for (let i = 0; i < arg.room.peers.length; i++) {
+    		let name = arg.room.peers[i];
 			let new_peer_id = arg.room.users[name].peer_id;
 			if (should_send_video(arg, name)) {
+				num_peers++;
 				ensure_video(new_peer_id, "calls", name);
 			} else {
 				remove_video(new_peer_id);
@@ -90,13 +92,13 @@ function update_from_server(arg) {
 					delete outgoing_peer_to_calls[new_peer_id];
 				}
 			}
-      
-      if(new_peer_id != self_peer_id) {
-        newOthers[name] = arg.room.users[name];
-      }
+			
+			if(new_peer_id != self_peer_id) {
+				newOthers[name] = arg.room.users[name];
+			}
 		}
-
-    others = newOthers;
+		
+		others = newOthers;
 		
 		// Remove old unneeded videos
 		let difference = server_data.room.peers.filter(x => !arg.room.peers.includes(x));
@@ -105,6 +107,11 @@ function update_from_server(arg) {
 			remove_video(server_data.room.users[difference[i]].peer_id);
 		}
 		server_data = arg;
+		if (num_peers == 0) {
+			closeBar();
+		} else {
+			openBar();
+		}
 		console.log("Ending update");
 	}
 	updateLock = false;
