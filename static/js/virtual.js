@@ -4,6 +4,7 @@ var stage;
 var map;
 var self_obj;
 var others = {};
+const RADIUS = 250;
 
 function drawRoom(stage, x, y, radius) {
   var room = new createjs.Shape();
