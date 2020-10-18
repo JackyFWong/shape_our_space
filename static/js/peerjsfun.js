@@ -33,7 +33,7 @@ function copy_url() {
 }
 
 
-function height(arg, name) {
+function getHeight(arg, name) {
 	// TODO return number of circles name is inside
   let x = arg.room.users[name].x;
 	let y = arg.room.users[name].y;
@@ -54,7 +54,7 @@ function should_send_video(arg, name) {
 	let myy = arg.room.users[username].y;
 	let new_peer_id = arg.room.users[name].peer_id;
 	if (new_peer_id == self_peer_id) return false;
-	if (height(arg, name) > height(arg, username)) return false;
+	if (getHeight(arg, name) < getHeight(arg, username)) return false;
 	if (Math.hypot(myx - arg.room.users[name].x, myy - arg.room.users[name].y) <= RADIUS)
 		return true;
 	return false;
