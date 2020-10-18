@@ -89,7 +89,7 @@ function init_canvas() {
   stage.addChild(map);
   
   self = new createjs.Shape().set({x: 100, y: 100, name: username});
-  self.graphics.beginFill(tcolor_init).drawPolyStar(0, 0, 25, 3, 0, 270).beginFill(bcolor_init).drawPolyStar(0, 0, 10, 3, 0, 270).beginFill("rgba(0, 0, 0, 0.1)").drawCircle(0, 0, RADIUS - 15).beginFill("Black").drawCircle(0, 0, 2);
+  self.graphics.beginFill(tcolor_init).drawPolyStar(0, 0, 30, 3, 0, 270).beginFill(bcolor_init).drawPolyStar(0, 0, 20, 3, 0, 270).beginFill("rgba(0, 0, 0, 0.1)").drawCircle(0, 0, RADIUS - 15).beginFill("Black").drawCircle(0, 0, 2);
   stage.addChild(self);
   
   drawRoom(stage, 1000, 225, 200);
