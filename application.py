@@ -92,6 +92,12 @@ def move_user(data):
     game_rooms.move_user(session["room"], session["username"], data.get("x", 0), data.get("y", 0))
     emit("update", game_rooms.get_room_info(session["room"]), room=session["room"])
 
+@socketio.on("make_circle")
+def circle_maker(data):
+    ensure_player(session)
+    game_rooms.add_circle(session["room"], data["x"], data["y"], data["radius"])
+    emit("update", game_rooms.get_room_info(session["room"]), room=session["room"])
+
 @socketio.on("disconnect")
 def handle_disconnection():
     ensure_player(session)

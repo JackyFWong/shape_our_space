@@ -15,6 +15,7 @@ def add_user(room, user):
         "peer_id": -1,
         "tcolor": "#ffffff",
         "bcolor": "#ffffff",
+        "circles": []
     }
     rooms[room]["peers"].append(user)
     return True
@@ -55,3 +56,10 @@ def get_room_info(room):
     return {
       "room": rooms[room]
     }
+
+def add_circle(room, x, y, radius):
+    rooms[room]["circles"].append({
+        "x": x,
+        "y": y,
+        "radius": radius
+    })
