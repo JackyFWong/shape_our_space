@@ -18,10 +18,10 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER: hackgt-cluster    # TODO: update to cluster name
-  GKE_ZONE: us-east1-b   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: hackgt-deploy-gke # TODO: update to deployment name
-  IMAGE: static-site
+  GKE_CLUSTER: hackgt-cluster    # TODO: update to cluster name :check:
+  GKE_ZONE: us-east1-b   # TODO: update to cluster zone :check:
+  DEPLOYMENT_NAME: hackgt-deploy-gke # TODO: update to deployment name :check:
+  IMAGE: static-site-shape-our-space
 
 jobs:
   setup-build-publish-deploy:
