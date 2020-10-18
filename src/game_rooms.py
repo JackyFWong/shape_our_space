@@ -29,7 +29,8 @@ def add_room(room):
         return False
     rooms[room] = {
         "users": {},
-        "peers": []
+        "peers": [],
+        "circles": []
     }
     return True
 
@@ -55,3 +56,10 @@ def get_room_info(room):
     return {
       "room": rooms[room]
     }
+
+def add_circle(room, x, y, radius):
+    rooms[room]["circles"].append({
+        "x": x,
+        "y": y,
+        "radius": radius
+    })

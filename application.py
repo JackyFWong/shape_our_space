@@ -39,7 +39,7 @@ def gather():
                 str(game_rooms.num_users(
                     request.form.get('room_code', "DEFAULT")
                 )+1)
-            ),
+            ).replace(" ", "-"),
             "room_code": request.form.get("room_code", "DEFAULT"),
             "bcolor": request.form.get("bColor", "#ffffff"),
             "tcolor": request.form.get("tColor", "#ffffff"),
@@ -90,6 +90,12 @@ def move_user(data):
         print("ERROR: invalid user")
         return
     game_rooms.move_user(session["room"], session["username"], data.get("x", 0), data.get("y", 0))
+    emit("update", game_rooms.get_room_info(session["room"]), room=session["room"])
+
+@socketio.on("make_circle")
+def circle_maker(data):
+    ensure_player(session)
+    game_rooms.add_circle(session["room"], data["x"], data["y"], data["radius"])
     emit("update", game_rooms.get_room_info(session["room"]), room=session["room"])
 
 @socketio.on("disconnect")
