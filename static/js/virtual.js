@@ -1,5 +1,5 @@
-var movement_speed = 50;
-const MIN_DISTANCE = 50;
+var movement_speed = 25;
+const MIN_DISTANCE = 25;
 var stage;
 var map;
 var self_obj;
