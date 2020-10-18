@@ -4,15 +4,18 @@ var stage;
 var map;
 var self_obj;
 var others = {};
+var roomCircles = [];
 const RADIUS = 250;
 
-function drawRoom(stage, x, y, radius) {
+function drawRoom(x, y, radius) {
   var room = new createjs.Shape();
-  room.graphics.beginStroke("Black").beginFill("White").drawCircle(0, 0, radius);
+  room.graphics.beginStroke("Black").beginFill("rgba(255, 255, 255, 0.1)").drawCircle(0, 0, radius);
   room.x = x;
   room.y = y;
+  room.isRoom = true;
   
   stage.addChild(room);
+  stage.setChildIndex(room, 1);
 }
 
 function move_to(obj, x, y) {
@@ -47,15 +50,15 @@ function move_to(obj, x, y) {
 function tick() {
 	move_to(self, self.targetx, self.targety);
  
-  circles = stage.children.filter(e => e.name != null & e.name != username)
-  for(let i = 0; i < circles.length; i++) {
-    let name = circles[i].name;
+  let otherPeople = stage.children.filter(e => e.name != null & e.name != username)
+  for(let i = 0; i < otherPeople.length; i++) {
+    let name = otherPeople[i].name;
     
     if (others[name]) {
-      move_to(circles[i], others[name].x, others[name].y);
+      move_to(otherPeople[i], others[name].x, others[name].y);
     }
     else {
-      stage.removeChild(circles[i]);
+      stage.removeChild(otherPeople[i]);
     }
   }
  
@@ -71,6 +74,17 @@ function tick() {
       console.log("Adding new token for " + key);
     }
   }  
+ 
+  // draw circle stuff
+  let drawnCircles = stage.children.filter(e => e.isRoom)
+  if(drawnCircles.length < roomCircles.length) {
+    for(let i = drawnCircles.length; i < roomCircles.length; i++) {
+      drawRoom(roomCircles[i].x, roomCircles[i].y, roomCircles[i].radius);
+    }
+  }
+  else if(drawnCircles.length > roomCircles.length) {
+    console.log("ERROR ERROR");
+  }
  
   // put yourself on top
   stage.setChildIndex(self, stage.children.length - 1);
@@ -92,23 +106,31 @@ function init_canvas() {
   self.graphics.beginFill(tcolor_init).drawPolyStar(0, 0, 30, 3, 0, 270).beginFill(bcolor_init).drawPolyStar(0, 0, 20, 3, 0, 270).beginFill("rgba(0, 0, 0, 0.1)").drawCircle(0, 0, RADIUS - 15).beginFill("Black").drawCircle(0, 0, 2);
   stage.addChild(self);
   
-  drawRoom(stage, 1000, 225, 200);
-  drawRoom(stage, 1000, 650, 200);  
-  
   stage.update();
 
 	self.targetx = self.x;
 	self.targety = self.y;
   
   map.addEventListener("click", e => {
-    self.targetx = e.stageX;
-    self.targety = e.stageY;
+    if (e.nativeEvent.button == 0) {
+      self.targetx = e.stageX;
+      self.targety = e.stageY;
    
-    stage.update();
+      stage.update();
 
-    console.log("moving to ", e.stageX, " ", e.stageY);
-    send_position(e.stageX, e.stageY);
+      console.log("moving to ", e.stageX, " ", e.stageY);
+      send_position(e.stageX, e.stageY);
+    }
+    else if (e.nativeEvent.button == 2) {
+      socket.emit("make_circle", {
+        x: e.stageX,
+        y: e.stageY,
+        radius: 100
+      });
+    }
   });
+  
+  window.oncontextmenu = function() { return false };
 }
 
 $(document).ready( function() {

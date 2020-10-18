@@ -35,7 +35,18 @@ function copy_url() {
 
 function height(arg, name) {
 	// TODO return number of circles name is inside
-	return 0;
+  let x = arg.room.users[name].x;
+	let y = arg.room.users[name].y;
+  
+  let height = 0;
+  
+	for(let i = 0; i < arg.room.circles.length; i++) {
+    if (Math.hypot(x - arg.room.circles[i].x, y - arg.room.circles[i].y) <= 100) {
+      height++;
+    }
+  }
+  
+  return height;
 }
 
 function should_send_video(arg, name) {
@@ -77,7 +88,7 @@ function update_from_server(arg) {
 		let num_peers = 0;
 		
 		for (let i = 0; i < arg.room.peers.length; i++) {
-    		let name = arg.room.peers[i];
+    	let name = arg.room.peers[i];
 			let new_peer_id = arg.room.users[name].peer_id;
 			if (should_send_video(arg, name)) {
 				num_peers++;
@@ -112,6 +123,10 @@ function update_from_server(arg) {
 		} else {
 			openBar();
 		}
+    
+    // Circle room stuff
+    roomCircles = arg.room.circles;
+    
 		console.log("Ending update");
 	}
 	updateLock = false;
