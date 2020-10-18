@@ -93,13 +93,15 @@ function add_video(peer_id, div_id, video_user) {
 }
 
 function remove_video(peer_id) {
+  if (!video_for.includes(peer_id)) return;
+  
 	$("#video-"+peer_id).remove();
 	//streams.remove(peer_to_stream[peer_id]);
 	let index = streams.indexOf(peer_to_stream[peer_id]);
 	if (index > -1) {
 		streams.splice(index, 1);
 	}
-	index = video_for.indexOf(peer_to_stream[peer_id]);
+	index = video_for.indexOf(peer_id);
 	if (index > -1) {
 		video_for.splice(index, 1);
 	}
@@ -111,6 +113,7 @@ function ensure_video(peer_id, div_id, video_user) {
 	if (video_for.includes(peer_id)) return;
 	if (peer_to_stream.hasOwnProperty(peer_id)) return;
 	if ($("#video-"+peer_id).length != 0) return;
+
 	console.log("adding video for ", peer_id);
 	add_video(peer_id, div_id, video_user);
 }

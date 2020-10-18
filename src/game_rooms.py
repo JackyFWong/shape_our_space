@@ -1,6 +1,5 @@
 rooms = {}
 
-
 def num_users(room):
     return len(rooms.get(room, {"users":[]})["users"])
 
@@ -47,5 +46,5 @@ def move_user(room, user, x, y):
 
 def get_room_info(room):
     return {
-        "room": rooms[room]
+      "room": rooms[room]
     }
