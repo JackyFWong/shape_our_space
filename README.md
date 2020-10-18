@@ -11,7 +11,7 @@ are better for presentations than social functions. Our project emulates
 the flow of real life social situations, allowing you to move from conversation 
 to conversation as needed.
 
-[Project link](https://shape-our-space.herokuapp.com)
+[Project link](https://shape-our-space.herokuapp.com)  
 [Official link does not work](shapeour.space)
 
 ## What it does
