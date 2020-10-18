@@ -40,7 +40,9 @@ def gather():
                     request.form.get('room_code', "DEFAULT")
                 )+1)
             ),
-            "room_code": request.form.get("room_code", "DEFAULT")
+            "room_code": request.form.get("room_code", "DEFAULT"),
+            "bcolor": request.form.get("bcolor", "#ffffff"),
+            "tcolor": request.form.get("tcolor", "#ffffff"),
         }
     )
 
@@ -66,6 +68,7 @@ def handle_connection(data):
     )
     game_rooms.add_user(session["room"], session["username"])
     game_rooms.update_peer_id(session["room"], session["username"], session["peer_id"])
+    game_rooms.set_color(session["room"], session["username"], data.get("bcolor"), data.get("tcolor"))
     emit("update", {"room":game_rooms.rooms[session["room"]]}, room=session["room"])  # ping to others
     join_room(session["room"])
 

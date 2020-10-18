@@ -12,9 +12,16 @@ def add_user(room, user):
         "username": user,
         "x": 100,
         "y": 100,
-        "peer_id": -1
+        "peer_id": -1,
+        "tcolor": "#ffffff",
+        "bcolor": "#ffffff",
     }
     rooms[room]["peers"].append(user)
+    return True
+
+def set_color(room, user, bcolor, tcolor):
+    rooms[room]["users"][user]["bcolor"] = bcolor
+    rooms[room]["users"][user]["tcolor"] = tcolor
     return True
 
 def add_room(room):
