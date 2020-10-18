@@ -9,7 +9,7 @@ const RADIUS = 250;
 
 function drawRoom(x, y, radius) {
   var room = new createjs.Shape();
-  room.graphics.beginStroke("Black").beginFill("rgba(255, 255, 255, 0.4)").drawCircle(0, 0, radius);
+  room.graphics.beginStroke("Black").beginFill("rgba(255, 255, 255, 0.33)").drawCircle(0, 0, radius);
   room.x = x;
   room.y = y;
   room.isRoom = true;
@@ -99,7 +99,7 @@ function init_canvas() {
 	createjs.Ticker.setFPS(30);
     
   map = new createjs.Shape();
-  map.graphics.beginStroke("Black").beginFill("#DDDDDD").rect(0, 0, 1400, 900);
+  map.graphics.beginStroke("Black").beginFill("#CAE9FF").rect(0, 0, 1400, 900);
   stage.addChild(map);
   
   self = new createjs.Shape().set({x: 100, y: 100, name: username});
