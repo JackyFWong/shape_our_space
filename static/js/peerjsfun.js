@@ -73,8 +73,10 @@ function update_from_server(arg) {
 		console.log("Getting update from server", arg);
 
 		// Make sure every new person has a video, and update them
-		for (let i = 0; i < arg.room.peers.length; i++) {
-    		let name = arg.room.peers[i];
+    newOthers = {}
+    
+    for (let i = 0; i < arg.room.peers.length; i++) {
+    	let name = arg.room.peers[i];
 			let new_peer_id = arg.room.users[name].peer_id;
 			if (should_send_video(arg, name)) {
 				ensure_video(new_peer_id, "calls", name);
@@ -88,7 +90,13 @@ function update_from_server(arg) {
 					delete outgoing_peer_to_calls[new_peer_id];
 				}
 			}
+      
+      if(new_peer_id != self_peer_id) {
+        newOthers[name] = arg.room.users[name];
+      }
 		}
+
+    others = newOthers;
 		
 		// Remove old unneeded videos
 		let difference = server_data.room.peers.filter(x => !arg.room.peers.includes(x));
