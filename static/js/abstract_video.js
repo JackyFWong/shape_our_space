@@ -15,6 +15,16 @@ var video_for = [];
 function get_self_stream() {
 	return new Promise(function(resolve, reject) {
 		let getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    
+    if(!getUserMedia) {
+      console.log("using new gum");
+      if (navigator.mediaDevices) {
+        getUserMedia = navigator.mediaDevices.getUserMedia;
+      }
+    }
+    
+    console.log(getUserMedia);
+    
 		getUserMedia(
 			{video: true, audio: true},
 			function(stream) {
