@@ -65,7 +65,7 @@ function should_receive_video(arg, name) {
 	let myy = arg.room.users[username].y;
 	let new_peer_id = arg.room.users[name].peer_id;
 	if (new_peer_id == self_peer_id) return false;
-	if (height(arg, name) < height(arg, username)) return false;
+	//if (getHeight(arg, name) < getHeight(arg, username)) return false;
 	if (Math.hypot(myx - arg.room.users[name].x, myy - arg.room.users[name].y) <= RADIUS)
 		return true;
 	return false;
