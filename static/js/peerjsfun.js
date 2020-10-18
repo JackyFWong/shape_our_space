@@ -129,7 +129,9 @@ $(document).ready( function() {
 					{
 						"id": self_peer_id,
 						"room": room_code,
-						"username": username
+						"username": username,
+						"bcolor": bcolor_init,
+						"tcolor": tcolor_init
 					}
 				);
 				socket.emit('get_current', {"?":"?"});
