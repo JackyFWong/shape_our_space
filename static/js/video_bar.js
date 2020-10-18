@@ -1,20 +1,18 @@
 var shift_canvas = true;
 
 function openBar() {
-    document.getElementById("video-feed").style.width = "500px";
-    document.getElementById("video-feed").style.padding = "20px";
+    $("#video-feed").removeClass("close-video").addClass("open-video");
     if (shift_canvas) {
-        document.getElementById("screen-wrap").style.marginRight = "500px";
-        document.getElementById("personal-video").style.marginRight = "520px";
+        $("#screen-wrap").removeClass("close-screen").addClass("open-screen");
+        $("#personal-video").removeClass("close-preview").addClass("open-preview");
     }
 }
 
 function closeBar() {
-    document.getElementById("video-feed").style.width = "0";
-    document.getElementById("video-feed").style.padding = "0";
+    $("#video-feed").removeClass("open-video").addClass("close-video");
     if (shift_canvas) {
-        document.getElementById("screen-wrap").style.marginRight = "0";
-        document.getElementById("personal-video").style.marginRight = "20px";
+        $("#screen-wrap").removeClass("open-screen").addClass("close-screen");
+        $("#personal-video").removeClass("open-preview").addClass("close-preview");
     }
 }
 

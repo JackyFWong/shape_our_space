@@ -83,7 +83,8 @@ function add_video(peer_id, div_id, video_user) {
 
 		let videoWrapper = document.createElement("div");
 		videoWrapper.id = "video-"+peer_id;
-		videoWrapper.className = "video-item";
+		videoWrapper.classList.add("video-item");
+		videoWrapper.classList.add("container-sm");
 		videoWrapper.appendChild(newvideo);
 		videoWrapper.appendChild(videoName);
 		$("#"+div_id).append(videoWrapper)

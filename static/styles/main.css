@@ -10,7 +10,7 @@
     --c8: #1D1826;
     --c9: #FFFFFF;
 
-    --cbkg: #1A1D21;
+    --cbkg: #566982;
 }
 
 html, body {
@@ -41,7 +41,7 @@ form.items {
     justify-content: center;
     align-items: center;
 
-    width: 50%;
+    width: 100%;
     margin: 0;
     padding: 0;
 }
@@ -66,11 +66,11 @@ form.items input[type="text"]:hover {
 
 form.items label {
     color: var(--c3);
-    margin: 0 10px;
+    margin: 10px;
     padding: 0;
 }
 form.items input[type="color"] {
-    margin: 0 10px;
+    margin: 10px;
     padding: 5px;
     border: none;
 }
@@ -79,8 +79,8 @@ form.items input[type="submit"] {
     color: var(--c3);
     background-color: var(--c0);
     border-width: 0;
-    margin-top: 10px;
-    padding: 20px;
+    margin-top: 20px;
+    padding: 10px 20px;
 }
 
 form.items input[type="submit"]:hover {
@@ -162,14 +162,15 @@ form.items input[type="submit"]:hover {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 
     max-height: 100%;
     width: 100%;
 }
 
 .video-item {
-    height: 150px;
-    width: auto;;
+    height: 140px;
+    width: auto;
     margin: 10px;
     padding: 5px;
     
@@ -202,7 +203,7 @@ form.items input[type="submit"]:hover {
     margin: 20px;
     padding: 5px;
 
-    height: 150px;
+    height: 140px;
     width: auto;
 
     background-color: var(--c6);
@@ -212,4 +213,66 @@ form.items input[type="submit"]:hover {
 .preview video {
     height: 100%;
     width: auto;
+}
+
+/* Bar Media Queries */
+
+.open-video {
+    width: 500px;
+    padding: 20px;
+}
+.open-screen {
+    margin-right: 500px;
+}
+.open-preview {
+    margin-right: 520px;
+}
+.close-video {
+    width: 0;
+    padding: 0;
+}
+.close-screen {
+    margin-right: 0;
+}
+.close-preview {
+    margin-right: 20px;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .sidebar {
+        position: static;
+        float: right;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+    }
+    .sidebar .closebtn {
+        position: relative;
+    }
+
+    .preview {
+        position: fixed;
+        height: 70px;
+        margin-right: 20px;
+    }
+
+    #screen-wrap {
+        margin-bottom: 0;
+    }
+
+    #calls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    .video-item {
+        max-width: 200px;
+        height: auto;
+        width: auto;
+    }
+    .video-item video {
+        width: 100%;
+        height: auto;
+    }
 }
